@@ -1,0 +1,6 @@
+apiVersion: v1alpha1
+kind: NetworkDefaultActionConfig
+##
+# Make sure default action is accept for now
+##
+ingress: accept  # Default action for all not explicitly configured ingress traffic: accept or block.

@@ -1,0 +1,13 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: "cluster-internal-only-worker-node-ingress"
+spec:
+  description: "Allow clusterwide ingress to worker node matching label"
+  nodeSelector:
+    matchLabels:
+      firewall: cilium
+  ingress:
+  - fromEntities:
+    - cluster
+

@@ -1,0 +1,20 @@
+---
+# Delete optional Rule to allow ingress to Cilium Agent Health API
+# Mimics rule deletion by setting allowed subnet to just 127.0.0.1
+# Test ferom talos-default docker network with subnet 10.5.0.0/24
+# curl -v http://10.5.0.4:4240/hello
+# Should fail after rule is applied
+
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: cni-health
+portSelector:
+  ports:
+    - 4240
+  protocol: tcp
+ingress:
+  - subnet: 127.0.0.1/32
+
+
+# Apply to work at 10.5.0.X
+# talosctl patch machineconfig -n 10.5.0.X -p @optional-cilium-health-firewall-rule.patch
