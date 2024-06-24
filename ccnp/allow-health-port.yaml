@@ -1,0 +1,17 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: "allow-ingress-cilium-health-port"
+spec:
+  description: "Allow outside cluster ingress to health port on worker node matching label"
+  nodeSelector:
+    matchLabels:
+      firewall: cilium
+  ingress:
+  - fromEntities:
+    - world
+  - toPorts:
+    - ports:
+      - port: "4240"
+        protocol: TCP 
+
