@@ -9,8 +9,8 @@ spec:
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumLoadBalancerIPPool
 metadata:
-  name: "kind-network-ip-pool"
+  name: "cube-network-ip-pool"
 spec:
   blocks:
-  - start: "10.5.0.100"
-    stop: "10.5.0.200"
+    - start: "10.10.1.80"
+      stop: "10.10.1.99"

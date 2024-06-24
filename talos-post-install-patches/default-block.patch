@@ -1,40 +1,6 @@
 apiVersion: v1alpha1
 kind: NetworkDefaultActionConfig
-##
-# Make sure default action is accept for now
-##
-ingress: block  # Default action for all not explicitly configured ingress traffic: accept or block.
----
-apiVersion: v1alpha1
-kind: NetworkRuleConfig
-name: kubelet-ingress
-portSelector:
-  ports:
-    - 10250
-  protocol: tcp
-ingress:
-  - subnet: 10.5.0.0/24
----
-apiVersion: v1alpha1
-kind: NetworkRuleConfig
-name: apid-ingress
-portSelector:
-  ports:
-    - 50000
-  protocol: tcp
-ingress:
-  - subnet: 0.0.0.0/0
-  - subnet: ::/0
----
-apiVersion: v1alpha1
-kind: NetworkRuleConfig
-name: trustd-ingress
-portSelector:
-  ports:
-    - 50001
-  protocol: tcp
-ingress:
-  - subnet: 10.5.0.0/24
+ingress: block
 ---
 apiVersion: v1alpha1
 kind: NetworkRuleConfig
@@ -44,18 +10,7 @@ portSelector:
     - 6443
   protocol: tcp
 ingress:
-  - subnet: 0.0.0.0/0
-  - subnet: ::/0
----
-apiVersion: v1alpha1
-kind: NetworkRuleConfig
-name: etcd-ingress
-portSelector:
-  ports:
-    - 2379-2380
-  protocol: tcp
-ingress:
-  - subnet: 10.5.0.0/24
+  - subnet: 10.244.0.0/16
 ---
 apiVersion: v1alpha1
 kind: NetworkRuleConfig
@@ -66,10 +21,4 @@ portSelector:
   protocol: udp
 ingress:
   - subnet: 10.5.0.0/24
-
-# Apply to work at 10.5.0.4
-# talosctl patch machineconfig -n 10.5.0.4 -p @default-block.patch
-# Should be installed prior to cilium install
-# Sets ingress firewall to block by default
-# And opens up necessary node ports to the
-# docker talos-default network subnet 10.5.0.0/24
+  - subnet: 10.10.1.0/24

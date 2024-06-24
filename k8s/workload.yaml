@@ -53,13 +53,13 @@ spec:
         - name: starwars
           image: cilium/starwars:v2.2
           securityContext:
-            allowPrivilegeEscalation: false
-            runAsNonRoot: true
+            allowPrivilegeEscalation: true
+            runAsNonRoot: false
             seccompProfile:
               type: RuntimeDefault
-            capabilities:
-              drop:
-                - ALL
+            #capabilities:
+            #  drop:
+            #  - ALL
       nodeSelector:
         firewall: cilium
 ---
@@ -96,10 +96,10 @@ spec:
         - name: spaceship
           image: docker.io/cilium/json-mock
           securityContext:
-            allowPrivilegeEscalation: false
-            runAsNonRoot: true
+            allowPrivilegeEscalation: true
+            runAsNonRoot: false
             seccompProfile:
               type: RuntimeDefault
-            capabilities:
-              drop:
-                - ALL
+            #capabilities:
+            #  drop:
+            #  - ALL

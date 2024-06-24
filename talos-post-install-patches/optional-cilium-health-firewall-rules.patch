@@ -13,6 +13,7 @@ portSelector:
   protocol: tcp
 ingress:
   - subnet: 10.5.0.0/24
+  - subnet: 10.10.1.0/24
 
 
 # Apply to work at 10.5.0.X
