@@ -1,0 +1,94 @@
+machine:
+  pods:
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-cilium-operator
+        namespace: kube-system
+      spec:
+        containers:
+          - name: cilium-operator
+            image: quay.io/cilium/operator-generic:v1.15.5@sha256:f5d3d19754074ca052be6aac5d1ffb1de1eb5f2d947222b5f10f6d97ad4383e8
+            command:
+              - /usr/bin/cilium-operator-generic
+              - --version
+        restartPolicy: Never
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-cilium-agent
+        namespace: kube-system
+      spec:
+        containers:
+          - name: cilium-operator
+            image: quay.io/cilium/cilium:v1.15.5@sha256:4ce1666a73815101ec9a4d360af6c5b7f1193ab00d89b7124f8505dee147ca40
+            command:
+              - /usr/bin/cilium-agent
+              - --version
+        restartPolicy: Never
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-tiefighter
+        namespace: kube-system
+      spec:
+        containers:
+          - name: tiefighter
+            image: docker.io/cilium/json-mock:latest
+            command:
+              - /bin/bash
+              - -c
+              - true
+        restartPolicy: Never
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-deathstar
+        namespace: kube-system
+      spec:
+        containers:
+          - name: deathstar
+            image: quay.io/cilium/starwars:v2.2
+            command:
+              - /starwars-docker
+              - --help
+        restartPolicy: Never
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-starboard-cilium
+        namespace: kube-system
+      spec:
+        containers:
+          - name: starboard-cilium
+            image: public.ecr.aws/jg/starboard:cilium
+            command:
+              - /bin/busybox
+              - true
+        restartPolicy: Never
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-starboard-sidero
+        namespace: kube-system
+      spec:
+        containers:
+          - name: starboard-sidero
+            image: public.ecr.aws/jg/starboard:sidero
+            command:
+              - /bin/busybox
+              - true
+        restartPolicy: Never
+    - apiVersion: v1
+      kind: Pod
+      metadata:
+        name: static-starboard-thumbsup
+        namespace: kube-system
+      spec:
+        containers:
+          - name: starboard-thumbsup
+            image: public.ecr.aws/jg/starboard:thumbsup
+            command:
+              - /bin/busybox
+              - true
+        restartPolicy: Never

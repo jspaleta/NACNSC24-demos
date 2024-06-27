@@ -3,13 +3,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: deathstar-lb
-  namespace: default  
+  namespace: default
   labels:
     app.kubernetes.io/name: deathstar-lb
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
+    - port: 80
   selector:
     org: empire
     class: deathstar
@@ -18,13 +18,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: deathstar-np
-  namespace: default  
+  namespace: default
   labels:
     app.kubernetes.io/name: deathstar-np
 spec:
   type: NodePort
   ports:
-  - port: 80
+    - port: 80
   selector:
     org: empire
     class: deathstar
@@ -33,7 +33,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deathstar
-  namespace: default  
+  namespace: default
   labels:
     app.kubernetes.io/name: deathstar
 spec:
@@ -50,8 +50,16 @@ spec:
         app.kubernetes.io/name: deathstar
     spec:
       containers:
-      - name: starwars
-        image: cilium/starwars:v2.2
+        - name: starwars
+          image: cilium/starwars:v2.2
+          securityContext:
+            allowPrivilegeEscalation: true
+            runAsNonRoot: false
+            seccompProfile:
+              type: RuntimeDefault
+            #capabilities:
+            #  drop:
+            #  - ALL
       nodeSelector:
         firewall: cilium
 ---
@@ -59,7 +67,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tiefighter
-  namespace: default  
+  namespace: default
   labels:
     app.kubernetes.io/name: tiefighter
 spec:
@@ -79,11 +87,19 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: firewall
-                operator: NotIn
-                values:
-                - cilium
+              - matchExpressions:
+                  - key: firewall
+                    operator: NotIn
+                    values:
+                      - cilium
       containers:
-      - name: spaceship
-        image: docker.io/cilium/json-mock
+        - name: spaceship
+          image: docker.io/cilium/json-mock
+          securityContext:
+            allowPrivilegeEscalation: true
+            runAsNonRoot: false
+            seccompProfile:
+              type: RuntimeDefault
+            #capabilities:
+            #  drop:
+            #  - ALL
